@@ -2,6 +2,60 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 /**
+ * Texture
+ */
+const loadingManager = new THREE.LoadingManager()
+
+// loadingManager.onStart = () =>{
+//     console.log('onStart');
+// }
+// loadingManager.onLoad = () =>{
+//     console.log('onLoad');
+// }
+// loadingManager.onProgress = () =>{
+//     console.log('onProgress');
+// }
+// loadingManager.onError = () =>{
+//     console.log('onError');
+// }
+const textureLoader = new THREE.TextureLoader(loadingManager)
+// const colorTexture = textureLoader.load('/textures/door/color.jpg' )
+// const colorTexture = textureLoader.load('/textures/checkerboard-1024x1024.png')
+// const colorTexture = textureLoader.load('/textures/checkerboard-8x8.png')
+const colorTexture = textureLoader.load('/textures/minecraft.png')
+const alphaTexuture = textureLoader.load('/textures/door/alpha.jpg')
+const heightTexuture = textureLoader.load('/textures/door/height.jpg')
+const normalTexuture = textureLoader.load('/textures/door/normal.jpg')
+const ambientOcclusionTexuture = textureLoader.load('/textures/door/ambientOcclusion.jpg')
+const metalnessTexuture = textureLoader.load('/textures/door/metalness.jpg')
+const roughnessTexuture = textureLoader.load('/textures/door/roughness.jpg')
+
+// colorTexture.repeat.x = 2
+// colorTexture.repeat.y = 3
+
+// colorTexture.wrapS = THREE.RepeatWrapping
+// colorTexture.wrapT = THREE.RepeatWrapping
+
+// 鏡像複製 水平
+// colorTexture.wrapS = THREE.MirroredRepeatWrapping
+// 鏡像複製 垂直
+// colorTexture.wrapT = THREE.MirroredRepeatWrapping
+// 改變位置
+// colorTexture.offset.x = 0.5
+// colorTexture.offset.y = 0.5
+
+// colorTexture.rotation = Math.PI / 4
+// colorTexture.center.x = 0.5
+// colorTexture.center.y = 0.5
+
+// 解決遠距離貼圖模糊：貼圖3D顯示小於實際貼圖大小時(物件較遠或物件較小)，所套用的縮圖方式；
+// colorTexture.minFilter = THREE.NearestFilter
+// 解決近距離貼圖模糊：貼圖3D顯示大於實際貼圖大小時(物件較近或物件較大)
+colorTexture.magFilter = THREE.NearestFilter
+colorTexture.generateMipmaps = false
+
+
+/**
  * Base
  */
 // Canvas
@@ -14,7 +68,8 @@ const scene = new THREE.Scene()
  * Object
  */
 const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+console.log(geometry.attributes)
+const material = new THREE.MeshBasicMaterial({ map: colorTexture })
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
